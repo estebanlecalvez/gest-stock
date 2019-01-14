@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl,FormGroup,FormBuilder,Validators} from '@angular/forms'
 
 @Component({
   selector: 'products',
@@ -60,6 +61,28 @@ export class ProductComponent implements OnInit {
   ];
 
   showForm=false;
+  error = '';
+  nomCtrl: FormControl;
+  fournisseurCtrl: FormControl;
+  ageCtrl: FormControl;
+  descriptionCtrl: FormControl;
+
+  addProductForm: FormGroup;
+
+  
+  constructor(fb: FormBuilder) {
+    this.nomCtrl = fb.control('', [Validators.required]);
+    this.fournisseurCtrl = fb.control('',[Validators.required]);
+    this.ageCtrl = fb.control('', [Validators.required, Validators.pattern('[1-9]*')]);
+    this.descriptionCtrl = fb.control('',[Validators.required]);
+
+    this.addProductForm = fb.group({
+      nom: this.nomCtrl,
+      fournisseur:this.fournisseurCtrl,
+      age: this.ageCtrl,
+      description: this.descriptionCtrl,
+    });}
+
   delete(product) {
     this.products.forEach((item, index) => {
       if (item === product) this.products.splice(index, 1);
@@ -67,14 +90,12 @@ export class ProductComponent implements OnInit {
   }
 
 
-  addProduct(product){
-    this.products.push(product);
+  addProduct(){
+    this.products.push(this.addProductForm.value);
   }
   showFormAddProduct(){
     this.showForm = !this.showForm;
   }
-
-  constructor() { }
 
   ngOnInit() {
   }

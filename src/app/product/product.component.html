@@ -6,7 +6,7 @@
 <ng-template #other_content>
   <h1  style="text-align:center"><a (click)="showFormAddProduct()">Ajouter un produit</a></h1>
 </ng-template>
-<form (ngSubmit)="addProduct(nom,fournisseur,age,description)">
+<form [formGroup]="addProductForm">
   <div *ngIf="showForm">
 
     <div>
@@ -28,19 +28,20 @@
 
     <div>
       <label>Description </label><input formControlName="description" id="description">
+      <div class="errors" *ngIf="descriptionCtrl.hasError('required')">La description est obligatoire.</div>
     </div>
 
-    <button type="submit" [disabled]="userForm.invalid">Register</button>
-    <button (click)="reset()">Reset</button>
+    <button [disabled]="userForm.invalid" href=""(click)="addProduct(nom,fournisseur,age,description)">addProduct</button>
   </div>
-
 </form>
+
+
 <tr *ngFor="let product of products" class="product">
   <td>{{product.name | uppercase }}</td>
   <td>{{product.fournisseur }}</td>
   <td>{{product.email_fournisseur }}</td>
   <td>{{product.ingredients_list }}</td>
-  <td>{{product.description | lowercase}}</td>
+  <td>{{product.description | lowercase | slice:0:19 }}</td>
   <td>{{product.age }}</td>
   <td>{{product.conservation_condition }}</td>
   <td>{{product.price }}</td>
