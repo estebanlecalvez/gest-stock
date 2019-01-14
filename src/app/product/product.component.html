@@ -1,0 +1,48 @@
+<h1 style="text-align:center">Liste des produits</h1>
+<div *ngIf="showForm;else other_content">
+  <h1 style="text-align:center" (click)="showFormAddProduct()">-</h1>
+</div>
+
+<ng-template #other_content>
+  <h1  style="text-align:center"><a (click)="showFormAddProduct()">Ajouter un produit</a></h1>
+</ng-template>
+<form (ngSubmit)="addProduct(nom,fournisseur,age,description)">
+  <div *ngIf="showForm">
+
+    <div>
+      <label>Nom </label><input formControlName="nom" id="nom">
+      <div class="errors" *ngIf="nomCtrl.hasError('required')">Le nom est obligatoire.</div>
+    </div>
+
+    <div>
+      <label>Fournisseur </label><input formControlName="fournisseur" id="fournisseur">
+      <div class="errors" *ngIf="prenomCtrl.hasError('required')">Le fournisseur est obligatoire.</div>
+    </div>
+
+    <div>
+      <label>Age </label><input formControlName="age" id="age">
+      <div class="errors" *ngIf="ageCtrl.hasError('required')">L'âge est obligatoire.</div>
+      <div class="errors" *ngIf="ageCtrl.hasError('pattern')">Attendu : nombres</div>
+    </div>
+
+
+    <div>
+      <label>Description </label><input formControlName="description" id="description">
+    </div>
+
+    <button type="submit" [disabled]="userForm.invalid">Register</button>
+    <button (click)="reset()">Reset</button>
+  </div>
+
+</form>
+<tr *ngFor="let product of products" class="product">
+  <td>{{product.name | uppercase }}</td>
+  <td>{{product.fournisseur }}</td>
+  <td>{{product.email_fournisseur }}</td>
+  <td>{{product.ingredients_list }}</td>
+  <td>{{product.description | lowercase}}</td>
+  <td>{{product.age }}</td>
+  <td>{{product.conservation_condition }}</td>
+  <td>{{product.price }}</td>
+  <td><img src="assets/bin.png" alt="supprimer" (click)="delete(product)"></td>
+</tr>

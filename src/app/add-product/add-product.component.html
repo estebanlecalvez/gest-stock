@@ -1,0 +1,43 @@
+<form (ngSubmit)="register()">
+  <div *ngIf="showForm">
+
+  <div>
+     <label>Nom de classe </label><input formControlName="nomDeClasse">
+  </div>
+ 
+  <div>
+    <label>Nom </label><input formControlName="nom">
+    <div class="errors" *ngIf="nomCtrl.hasError('required')">Le nom est obligatoire.</div>
+    <div class="errors" *ngIf="nomCtrl.hasError('maxlength')">Le nombre de caractères maximum est de 25.</div>
+  </div>
+ 
+  <div>
+     <label>Prenom </label><input formControlName="prenom">
+     <div class="errors" *ngIf="prenomCtrl.hasError('required')">Le prenom est obligatoire.</div>
+     <div class="errors" *ngIf="prenomCtrl.hasError('maxlength')">Le nombre de caractères maximum est de 25.</div>
+  </div>
+ 
+  <div>
+     <label>Age </label><input formControlName="age">
+     <div class="errors" *ngIf="ageCtrl.hasError('required')">L'âge est obligatoire.</div>
+     <div class="errors" *ngIf="ageCtrl.hasError('pattern')">Attendu : nombres</div>
+   </div>
+ 
+   <div>
+     <label>Filière </label><input formControlName="filliere">
+   </div>
+ 
+   <div>
+     <label>Description </label><input formControlName="description">
+   </div>
+ 
+   <div>
+    <label>Email </label><input formControlName="mail">
+    <div class="errors" *ngIf="mailCtrl.hasError('email')">Attendu : mail avec un '@'</div>
+   </div>
+ 
+  <button type="submit" [disabled]="userForm.invalid">Register</button>
+  <button (click)="reset()">Reset</button>
+</div>
+
+ </form>
